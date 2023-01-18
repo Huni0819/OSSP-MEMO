@@ -278,7 +278,7 @@ public class Edit extends Activity
         textTime=it.getStringExtra("textTime");
 
         alarm=it.getStringExtra("alarm");
-        mainText=it.getStringExtra("e");
+        mainText=it.getStringExtra("mainText");
         lock_num=it.getIntExtra("lock_num", 0);
     }
 
