@@ -90,6 +90,7 @@ public class Edit extends Activity
         rdButton.setChecked(true);
     }
 
+    //각각의 버튼의 id값 설정
     private void setRadioButtonCheckedAccordingToTag(int tag) {
         switch (tag) {
             case 0:
@@ -111,7 +112,8 @@ public class Edit extends Activity
                 break;
         }
     }
-
+    
+    //테마 색상 변경 함수
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (tagRadio.getCheckedRadioButtonId()) {

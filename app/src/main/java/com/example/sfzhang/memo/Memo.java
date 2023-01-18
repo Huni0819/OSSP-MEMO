@@ -5,6 +5,7 @@ import org.litepal.crud.LitePalSupport;
 /**
  * Created by sf Zhang on 2016/12/20.
  */
+
 public class Memo extends LitePalSupport {
     private int num;
     private int tag;

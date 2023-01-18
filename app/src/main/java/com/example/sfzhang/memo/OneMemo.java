@@ -3,13 +3,15 @@ package com.example.sfzhang.memo;
 /**
  * Created by sf Zhang on 2016/12/20.
  */
+//한 메모의 값 저장
 public class OneMemo {
     private int tag;
     private String textDate;
     private String textTime;
     private boolean alarm;
     private String mainText;
-
+    
+    //생성자
     public OneMemo(int tag, String textDate, String textTime,boolean alarm, String mainText) {
         this.tag=tag;
         this.textDate=textDate;
@@ -18,7 +20,7 @@ public class OneMemo {
         this.mainText=mainText;
     }
 
-    //getter
+    //get
     public int getTag(){
         return tag;
     }
@@ -33,7 +35,7 @@ public class OneMemo {
         return mainText;
     }
 
-    //setter
+    //set
     public void setTag(int tag){
         this.tag=tag;
     }

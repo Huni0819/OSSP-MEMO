@@ -28,10 +28,11 @@ public class OneShotAlarm extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        //showMemo(context);
 
+        //알람 ID값을 받아오기
         alarmId=intent.getIntExtra("alarmId",0);
 
+        //해당 시간이 되면 알람 출력 및 진동
         Toast.makeText(context,"Time UP!",Toast.LENGTH_LONG).show();
 
         Vibrator vb =(Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -40,9 +41,10 @@ public class OneShotAlarm extends BroadcastReceiver {
         showNotice(context);
     }
 
-    //show notice and it can be clicked
+    //알람이 눈에 보이고 선택할 수 있게
     private void showNotice(Context context) {
         int num=alarmId-BIG_NUM_FOR_ALARM;
+        //BIG_NUM_FOR_ALARM = 100
         Log.d("MainActivity","alarmNoticeId "+num);
 
         //********************BUG SOLVED***********************
@@ -50,8 +52,11 @@ public class OneShotAlarm extends BroadcastReceiver {
         //after clicking the notice, we cannot get to the correct memo
         //while we always go to the second memo initialized
         //****************************************************
+        
+        //context를 Edit 액티비틴에 전송하는 intent 생성
         Intent intent=new Intent(context,Edit.class);
 
+        //memo의 id값을
         Memo record= getMemoWithId(num);
         deleteTheAlarm(num);//or num
 
@@ -73,13 +78,18 @@ public class OneShotAlarm extends BroadcastReceiver {
                 .build();
         manager.notify(num,notification);
     }
-
+    
+    //알람 삭제함수
     private void deleteTheAlarm(int num) {
         ContentValues temp = new ContentValues();
         temp.put("alarm", "");
         String where = String.valueOf(num);
         LitePal.updateAll(Memo.class, temp, "id = ?", where);
     }
+    
+    //수정정보 전송 함수
+    //putExtra -> export
+    //getExtra -> import
     private void transportInformationToEdit(Intent it, Memo record) {
         it.putExtra("num",record.getNum());
         it.putExtra("tag",record.getTag());
@@ -90,8 +100,10 @@ public class OneShotAlarm extends BroadcastReceiver {
         it.putExtra("mainText",record.getMainText());
     }
 
+    //메모 호출
     private Memo getMemoWithId(int num) {
         String whereArgs = String.valueOf(num);
+        //메모클래스에서 처음으로 발견된 레코드를 읽어옴
         Memo record= LitePal.where("id = ?", whereArgs).findFirst(Memo.class);
         return record;
     }
