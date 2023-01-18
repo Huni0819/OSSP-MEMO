@@ -21,7 +21,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 public class Edit extends Activity
-        implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, View.OnLongClickListener, RadioGroup.OnCheckedChangeListener{
+        implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, RadioGroup.OnCheckedChangeListener{
 
     //int[] color={R.color.yellow, R.color.blue,R.color.green,R.color.red,R.color.white};
 
@@ -77,7 +77,6 @@ public class Edit extends Activity
         time_text.setText(textTime);
         edt.setText(mainText);
 
-        av.setOnLongClickListener(this);
         if(alarm.length()>1) av.setText("Alert at "+alarm+"!");
         else av.setVisibility(View.GONE);
 
@@ -86,6 +85,7 @@ public class Edit extends Activity
 
         setRadioButtonCheckedAccordingToTag(tag);
         rdButton.setChecked(true);
+
     }
 
     //각각의 버튼의 id값 설정
@@ -197,6 +197,9 @@ public class Edit extends Activity
         av.setText("Alert at "+alarm+"!");
         av.setVisibility(View.VISIBLE);
         Toast.makeText(this,"Alarm will be on at "+alarm+" !",Toast.LENGTH_LONG).show();
+
+        ImageButton cancelButton = findViewById(R.id.cancel_button);
+        cancelButton.setVisibility(View.VISIBLE);
     }
 
     //******************************************************************************************
@@ -208,6 +211,8 @@ public class Edit extends Activity
         returnResult();
         finish();
     }
+
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -245,17 +250,13 @@ public class Edit extends Activity
         mainText=it.getStringExtra("mainText");
     }
 
-    @Override
-    //알람 버튼을 오랫동안 누를 시 알람 삭제
-    public boolean onLongClick(View v) {
-        if(v.getId()==R.id.alarmView||v.getId()==R.id.alarmButton) {
-            //delete the alarm information
+    //알람 설정 시 알람 삭제 버튼 추가해서 삭제 할 수 있게 적용
+    public void setCancel(View view) {
+        if(view.getId()==R.id.cancel_button){
             alarm="";
-            //hide textView
-            av.setVisibility(View.GONE);
+            av.setVisibility(view.GONE);
+            ImageButton cancelButton = findViewById(R.id.cancel_button);
+            cancelButton.setVisibility(view.INVISIBLE);
         }
-        return true;
     }
-
-
 }

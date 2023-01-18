@@ -1,5 +1,7 @@
 package com.example.sfzhang.memo;
 
+import android.widget.CheckBox;
+
 /**
  * Created by sf Zhang on 2016/12/20.
  */
@@ -10,7 +12,7 @@ public class OneMemo {
     private String textTime;
     private boolean alarm;
     private String mainText;
-    
+
     //생성자
     public OneMemo(int tag, String textDate, String textTime,boolean alarm, String mainText) {
         this.tag=tag;

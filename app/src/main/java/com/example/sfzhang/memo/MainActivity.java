@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity
         it.putExtra("textTime",current_time);
         it.putExtra("alarm","");
         it.putExtra("mainText","");
-        
+
         //EDIT 액티비티 시작
         startActivityForResult(it,position);
     }
