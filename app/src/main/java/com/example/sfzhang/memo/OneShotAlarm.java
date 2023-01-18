@@ -98,6 +98,7 @@ public class OneShotAlarm extends BroadcastReceiver {
         record.setAlarm("");
         it.putExtra("alarm","");
         it.putExtra("mainText",record.getMainText());
+        it.putExtra("lock_num", record.getLock_num());
     }
 
     //메모 호출

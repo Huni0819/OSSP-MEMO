@@ -12,14 +12,16 @@ public class OneMemo {
     private String textTime;
     private boolean alarm;
     private String mainText;
+    private int lock_num;
 
     //생성자
-    public OneMemo(int tag, String textDate, String textTime,boolean alarm, String mainText) {
+    public OneMemo(int tag, String textDate, String textTime,boolean alarm, String mainText, int lock_num) {
         this.tag=tag;
         this.textDate=textDate;
         this.textTime=textTime;
         this.alarm=alarm;
         this.mainText=mainText;
+        this.lock_num=lock_num;
     }
 
     //get
@@ -36,6 +38,7 @@ public class OneMemo {
     public String getMainText(){
         return mainText;
     }
+    public int getLock_num() {return lock_num; }
 
     //set
     public void setTag(int tag){
@@ -53,4 +56,5 @@ public class OneMemo {
     public void setMainText(String mainText){
         this.mainText=mainText;
     }
+    public void setLock_num(int lock_num) { this.lock_num=lock_num; }
 }

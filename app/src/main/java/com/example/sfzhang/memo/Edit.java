@@ -264,6 +264,7 @@ public class Edit extends Activity
         //no need for date and time
         it.putExtra("alarm",alarm);
         it.putExtra("mainText",edt.getText().toString());
+        it.putExtra("lock_num", lock_num);
 
         setResult(RESULT_OK,it);
     }
@@ -277,7 +278,8 @@ public class Edit extends Activity
         textTime=it.getStringExtra("textTime");
 
         alarm=it.getStringExtra("alarm");
-        mainText=it.getStringExtra("mainText");
+        mainText=it.getStringExtra("e");
+        lock_num=it.getIntExtra("lock_num", 0);
     }
 
     //알람 설정 시 알람 삭제 버튼 추가해서 삭제 할 수 있게 적용

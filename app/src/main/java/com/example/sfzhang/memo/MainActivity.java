@@ -101,7 +101,8 @@ public class MainActivity extends AppCompatActivity
             String textTime = record.getTextTime();
             boolean alarm = record.getAlarm().length() > 1 ? true : false;
             String mainText = record.getMainText();
-            OneMemo temp = new OneMemo(tag, textDate, textTime, alarm, mainText);
+            int lock_num = record.getLock_num();
+            OneMemo temp = new OneMemo(tag, textDate, textTime, alarm, mainText, lock_num);
             memolist.add(temp);
         }
 
@@ -168,6 +169,7 @@ public class MainActivity extends AppCompatActivity
 
         int num=requestCode;
         int tag=it.getIntExtra("tag",0);
+        int lock_num = it.getIntExtra("lock_num", 0);
 
         //캘린더에서 값 읽어오기
         Calendar c=Calendar.getInstance();
@@ -180,13 +182,14 @@ public class MainActivity extends AppCompatActivity
         String mainText=it.getStringExtra("mainText");
 
         boolean gotAlarm = alarm.length() > 1 ? true : false;
+
         //읽어온 값으로 새로운 메모 생성
-        OneMemo new_memo = new OneMemo(tag, current_date, current_time, gotAlarm, mainText);
+        OneMemo new_memo = new OneMemo(tag, current_date, current_time, gotAlarm, mainText, lock_num);
         
         //메모목록에 num값이 없으면
         if((requestCode+1)>memolist.size()) {
             // 새로운 메모 DB에 추가
-            addRecordToLitePal(num, tag, current_date, current_time, alarm, mainText);
+            addRecordToLitePal(num, tag, current_date, current_time, alarm, mainText, lock_num);
 
             //새로운 메모 메모 목록에 추가
             memolist.add(new_memo);
@@ -205,6 +208,7 @@ public class MainActivity extends AppCompatActivity
             temp.put("textTime", current_time);
             temp.put("alarm", alarm);
             temp.put("mainText", mainText);
+            temp.put("lock_num", lock_num);
             String where = String.valueOf(num);
             LitePal.updateAll(Memo.class, temp, "num = ?", where);
             
@@ -226,8 +230,8 @@ public class MainActivity extends AppCompatActivity
         String textTime=getCurrentTime(c);
 
         //두개의 메모를 DB에 추가
-        addRecordToLitePal(0,0,textDate,textTime,"","click to edit");
-        addRecordToLitePal(1,1,textDate,textTime,"","long click to delete");
+        addRecordToLitePal(0,0,textDate,textTime,"","click to edit", 0);
+        addRecordToLitePal(1,1,textDate,textTime,"","long click to delete", 0);
     }
 
     //날짜 정보 가져오기
@@ -250,7 +254,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     //DB에 메모를 추가하는 함수
-    private void addRecordToLitePal(int num, int tag, String textDate, String textTime, String alarm, String mainText) {
+    private void addRecordToLitePal(int num, int tag, String textDate, String textTime, String alarm, String mainText, int lock_num) {
         Memo record=new Memo();
         record.setNum(num);
         record.setTag(tag);
@@ -259,6 +263,7 @@ public class MainActivity extends AppCompatActivity
         record.setAlarm(alarm);
 
         record.setMainText(mainText);
+        record.setLock_num(lock_num);
         record.save();
     }
     
@@ -270,6 +275,7 @@ public class MainActivity extends AppCompatActivity
         it.putExtra("textTime",record.getTextTime());
         it.putExtra("alarm",record.getAlarm());
         it.putExtra("mainText",record.getMainText());
+        it.putExtra("lock_num", record.getLock_num());
     }
 
     //DB 추가 함수
@@ -288,6 +294,7 @@ public class MainActivity extends AppCompatActivity
         it.putExtra("textTime",current_time);
         it.putExtra("alarm","");
         it.putExtra("mainText","");
+        it.putExtra("lock_num", 0);
 
         //EDIT 액티비티 시작
         startActivityForResult(it,position);

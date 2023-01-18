@@ -2,6 +2,7 @@ package com.example.sfzhang.memo;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,13 @@ public class MemoAdapter extends ArrayAdapter<OneMemo> {
         }
         //작성 내용을 읽어와서 기본화면에서 보이게
         mainText.setText(memo.getMainText());
+
+        ImageView lockImage = (ImageView) view.findViewById(R.id.lock);
+        if(memo.getLock_num() == 0) {
+            lockImage.setVisibility(View.INVISIBLE);
+        } else {
+            lockImage.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }
