@@ -1,9 +1,8 @@
-# Memo
-a little memo on android device <br>
-` alarm clock `  can be added to each memo <br>
-Some screenshots are shown as below: <br>
-![](https://github.com/SFZhang26/Memo/raw/master/intro_pic/main.JPG)
-![](https://github.com/SFZhang26/Memo/raw/master/intro_pic/main2.JPG)  
-![](https://github.com/SFZhang26/Memo/raw/master/intro_pic/memo1.JPG)  
-![](https://github.com/SFZhang26/Memo/raw/master/intro_pic/memo2.JPG)  
-![](https://github.com/SFZhang26/Memo/raw/master/intro_pic/notice1.JPG)  
+# Memo - 20184406 장재훈
+
+* 기존 소스 코드에서 발생하던 에러 수정
+* 알람 삭제 버튼 추가
+* 기존 소스의 메모 삭제 방법이 long pressed 방식이라서 메모가 쉽게 지워짐
+* 잠금 버튼을 추가하여 쉽게 지워지지 않게 설정
+
+오픈 소스 주소 : https://github.com/SFZhang26/memo
