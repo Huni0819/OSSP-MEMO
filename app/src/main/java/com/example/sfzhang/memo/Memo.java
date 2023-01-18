@@ -14,6 +14,7 @@ public class Memo extends LitePalSupport {
     private String alarm;
     private String mainText;
     private int id;
+    private int lock_num;
 
     //getter
     public int getNum(){
@@ -35,6 +36,7 @@ public class Memo extends LitePalSupport {
         return mainText;
     }
     public int getId() { return id; }
+    public int getLock_num(){ return lock_num; }
 
     //setter
     public void setNum(int num) {
@@ -56,4 +58,5 @@ public class Memo extends LitePalSupport {
         this.mainText=mainText;
     }
     public void setId(int id){ this.id=id; }
+    public void setLock_num(int lock_num) { this.lock_num=lock_num; }
 }

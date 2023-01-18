@@ -37,6 +37,9 @@ public class Edit extends Activity
     String pic="";
     String audio="";
     ImageButton cancelButton;
+    ImageButton lockButton;
+
+    int lock_num = 0;
 
     int tag;
     String textDate;
@@ -80,13 +83,31 @@ public class Edit extends Activity
 
         cancelButton = findViewById(R.id.cancel_button);
 
+        lockButton = findViewById(R.id.lock_button);
+        //잠금 버튼 클릭시
+        lockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(lock_num == 0){
+                    lock_num = 1;
+                    lockButton.setBackgroundResource(R.drawable.lock);
+                }
+                else {
+                    lock_num = 0;
+                    lockButton.setBackgroundResource(R.drawable.unlock);
+                }
+            }
+        });
+
         if(alarm.length()>1) {
             av.setText("Alert at " + alarm + "!");
+            //알람이 설정되어 있으면 알람 삭제 버튼 VISIBLE
             cancelButton.setVisibility(View.VISIBLE);
 
         }
         else {
             av.setVisibility(View.GONE);
+            //알람 설정 x -> INVISIBLE
             cancelButton.setVisibility(View.INVISIBLE);
         }
 

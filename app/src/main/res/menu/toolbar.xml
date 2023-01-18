@@ -8,12 +8,4 @@
         app:showAsAction="always"
         />
 
-    <item
-        android:id="@+id/delete"
-        android:icon="@drawable/delete"
-        android:title="delete"
-        app:showAsAction="always"
-        />
-
-
 </menu>
