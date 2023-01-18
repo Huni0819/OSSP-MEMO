@@ -127,33 +127,38 @@ public class MainActivity extends AppCompatActivity
     //아이템을 오랫동안 눌렀을때 - 메모 삭제
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
         //저장된 메모 목록의 크기 가져옴
         int n=memolist.size();
-        
-        //삭제할 메모에 알람이 추가 되어있으면 알람 취소
-        if(memolist.get(position).getAlarm()) {
-            cancelAlarm(position);
-        }
-        //메모 목록에서 position에 해당하는 메모 삭제
-        memolist.remove(position);
-        //아답터 업데이트
-        adapter.notifyDataSetChanged();
 
-        //position을 문자열 변환
-        String whereArgs = String.valueOf(position); //why not position ?
-        //DB에서 메모 삭제
-        LitePal.deleteAll(Memo.class, "num = ?", whereArgs);
-        
-        //삭제한 메모 다음부터 값을 1씩 감소시켜 정렬 후 DB 업데이트
-        for(int i=position+1; i<n; i++) {
-            ContentValues temp = new ContentValues();
-            temp.put("num", i-1);
-            String where = String.valueOf(i);
-            LitePal.updateAll(Memo.class, temp, "num = ?", where);
+        if(memolist.get(position).getLock_num() == 1){
+            return true;
+        }
+        else {
+            //삭제할 메모에 알람이 추가 되어있으면 알람 취소
+            if(memolist.get(position).getAlarm()) {
+                cancelAlarm(position);
+            }
+            //메모 목록에서 position에 해당하는 메모 삭제
+            memolist.remove(position);
+            //아답터 업데이트
+            adapter.notifyDataSetChanged();
+
+            //position을 문자열 변환
+            String whereArgs = String.valueOf(position); //why not position ?
+            //DB에서 메모 삭제
+            LitePal.deleteAll(Memo.class, "num = ?", whereArgs);
+
+            //삭제한 메모 다음부터 값을 1씩 감소시켜 정렬 후 DB 업데이트
+            for(int i=position+1; i<n; i++) {
+                ContentValues temp = new ContentValues();
+                temp.put("num", i-1);
+                String where = String.valueOf(i);
+                LitePal.updateAll(Memo.class, temp, "num = ?", where);
+            }
+
+            return true;
         }
 
-        return true;
     }
 
     //sub액티비티에서 main액티비티로 돌아올때 동작하는 함수. intent를 통해서 응답코드값을 전송받음
@@ -294,7 +299,7 @@ public class MainActivity extends AppCompatActivity
         it.putExtra("textTime",current_time);
         it.putExtra("alarm","");
         it.putExtra("mainText","");
-        it.putExtra("lock_num", 0);
+        it.putExtra("lock_num", "");
 
         //EDIT 액티비티 시작
         startActivityForResult(it,position);
