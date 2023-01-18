@@ -5,8 +5,6 @@ import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +12,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import org.litepal.crud.DataSupport;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import org.litepal.LitePal;
 import org.litepal.tablemanager.Connector;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity
         implements AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener{
 
     //list to store all the memo
-    private List<OneMemo> memolist=new ArrayList<>();
+    private final List<OneMemo> memolist=new ArrayList<>();
 
     //adapter
     MemoAdapter adapter;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
 
-        Toolbar toolbar=(Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar= findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Connector.getDatabase();
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         loadHistoryData();
 
         adapter=new MemoAdapter(MainActivity.this, R.layout.memo_list, memolist);
-        lv=(ListView) findViewById(R.id.list);
+        lv= findViewById(R.id.list);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(this);
@@ -66,21 +67,18 @@ public class MainActivity extends AppCompatActivity
 
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings:
-                onAdd();
-                break;
-            default:
+        if (item.getItemId() == R.id.settings) {
+            onAdd();
         }
         return true;
     }
 
     private void loadHistoryData() {
-        List<Memo> memoes= DataSupport.findAll(Memo.class);
+        List<Memo> memoes= LitePal.findAll(Memo.class);
 
         if(memoes.size()==0) {
             initializeLitePal();
-            memoes = DataSupport.findAll(Memo.class);
+            memoes = LitePal.findAll(Memo.class);
         }
 
         for(Memo record:memoes) {
@@ -96,20 +94,6 @@ public class MainActivity extends AppCompatActivity
             memolist.add(temp);
         }
 
-    }
-
-    //test
-    public void testAdd(View v) {
-        /*
-        Memo record=new Memo();
-        record.setNum(1);
-        record.setTag(1);
-        record.setTextDate("1212");
-        record.setTextTime("23:00");
-        record.setAlarm("123");
-        record.setMainText("hahaha");
-        record.save();
-        */
     }
 
     @Override
@@ -138,20 +122,21 @@ public class MainActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
 
         String whereArgs = String.valueOf(position); //why not position ?
-        DataSupport.deleteAll(Memo.class, "num = ?", whereArgs);
+        LitePal.deleteAll(Memo.class, "num = ?", whereArgs);
 
         for(int i=position+1; i<n; i++) {
             ContentValues temp = new ContentValues();
             temp.put("num", i-1);
             String where = String.valueOf(i);
-            DataSupport.updateAll(Memo.class, temp, "num = ?", where);
+            LitePal.updateAll(Memo.class, temp, "num = ?", where);
         }
 
         return true;
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent it) {
-        if(resultCode==RESULT_OK) {
+        super.onActivityResult(requestCode, resultCode, it);
+        if (resultCode == RESULT_OK) {
             updateLitePalAndList(requestCode, it);
         }
     }
@@ -194,7 +179,7 @@ public class MainActivity extends AppCompatActivity
             temp.put("alarm", alarm);
             temp.put("mainText", mainText);
             String where = String.valueOf(num);
-            DataSupport.updateAll(Memo.class, temp, "num = ?", where);
+            LitePal.updateAll(Memo.class, temp, "num = ?", where);
 
             memolist.set(num, new_memo);
         }
@@ -279,7 +264,7 @@ public class MainActivity extends AppCompatActivity
 
     private Memo getMemoWithNum(int num) {
         String whereArgs = String.valueOf(num);
-        Memo record= DataSupport.where("num = ?", whereArgs).findFirst(Memo.class);
+        Memo record= LitePal.where("num = ?", whereArgs).findFirst(Memo.class);
         return record;
     }
 

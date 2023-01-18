@@ -10,11 +10,13 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Vibrator;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.litepal.crud.DataSupport;
+import androidx.core.app.NotificationCompat;
+
+import org.litepal.LitePal;
+
 
 /**
  * Created by sf Zhang on 2016/12/21.
@@ -76,7 +78,7 @@ public class OneShotAlarm extends BroadcastReceiver {
         ContentValues temp = new ContentValues();
         temp.put("alarm", "");
         String where = String.valueOf(num);
-        DataSupport.updateAll(Memo.class, temp, "id = ?", where);
+        LitePal.updateAll(Memo.class, temp, "id = ?", where);
     }
     private void transportInformationToEdit(Intent it, Memo record) {
         it.putExtra("num",record.getNum());
@@ -90,7 +92,7 @@ public class OneShotAlarm extends BroadcastReceiver {
 
     private Memo getMemoWithId(int num) {
         String whereArgs = String.valueOf(num);
-        Memo record= DataSupport.where("id = ?", whereArgs).findFirst(Memo.class);
+        Memo record= LitePal.where("id = ?", whereArgs).findFirst(Memo.class);
         return record;
     }
 }
