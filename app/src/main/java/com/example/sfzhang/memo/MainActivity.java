@@ -341,7 +341,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(MainActivity.this, OneShotAlarm.class);
         intent.putExtra("alarmId",record.getId()+BIG_NUM_FOR_ALARM);
         PendingIntent sender = PendingIntent.getBroadcast(
-                MainActivity.this, record.getId()+BIG_NUM_FOR_ALARM, intent, 0);
+                MainActivity.this, record.getId()+BIG_NUM_FOR_ALARM, intent, PendingIntent.FLAG_IMMUTABLE);
 
         // We want the alarm to go off 10 seconds from now.
         Calendar calendar = Calendar.getInstance();
@@ -367,7 +367,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(MainActivity.this,
                 OneShotAlarm.class);
         PendingIntent sender = PendingIntent.getBroadcast(
-                MainActivity.this, record.getId()+BIG_NUM_FOR_ALARM, intent, 0);
+                MainActivity.this, record.getId()+BIG_NUM_FOR_ALARM, intent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
         am.cancel(sender);
     }
