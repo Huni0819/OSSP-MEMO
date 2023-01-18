@@ -61,18 +61,16 @@ public class Edit extends Activity
 
         Intent it=getIntent();
         getInformationFromMain(it);
-
+        
+        //레이아웃 설정
         myLayout = (LinearLayout) findViewById(R.id.whole);
-        //myLayout.setBackgroundColor(color[tag]);
-        //myLayout.setBackgroundResource(R.drawable.edit_bg_yellow);
         myLayout.setBackgroundResource(R.drawable.edit_bg_yellow);
 
+        //레이아웃 요소 설정
         date_text=(TextView) findViewById(R.id.dateText);
         time_text=(TextView) findViewById(R.id.timeText);
         alarm_button=(ImageButton) findViewById((R.id.alarmButton));
-        //alarm_button.setBackgroundResource(R.mipmap.ic_launcher);
         edt=(EditText) findViewById(R.id.editText);
-        //edt.setBackgroundColor(color[tag]);
         av=(TextView) findViewById(R.id.alarmView);
 
         date_text.setText(textDate);
@@ -148,6 +146,7 @@ public class Edit extends Activity
     }
 
     //*********************************set alarm clock***********************************
+    //알람 시간 설정
     public void setAlarm(View v) {
         if(alarm.length()<=1) {
             //if no alarm clock has been set up before
@@ -204,7 +203,7 @@ public class Edit extends Activity
 
 
 
-    //press the save button
+    //저장버튼 클릭시 수행 함수
     public void onSave(View v) {
         returnResult();
         finish();
@@ -213,7 +212,7 @@ public class Edit extends Activity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        //if the Back Button is pressed
+        //BACK 버튼 클릭 시
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             returnResult();
             finish();
@@ -222,7 +221,7 @@ public class Edit extends Activity
         return super.onKeyDown(keyCode, event);
     }
 
-    // after pressing back or save, return the current state
+    // 돌아가거나 저장된 후의 상태 반환
     private void returnResult() {
         Intent it=new Intent();
 
@@ -234,7 +233,7 @@ public class Edit extends Activity
         setResult(RESULT_OK,it);
     }
 
-    //read Intent information from main_activity
+    //메인 액티비티로부터의 메모 정보를 받는 함수
     private void getInformationFromMain(Intent it) {
         num=it.getIntExtra("num",0);
 
@@ -247,6 +246,7 @@ public class Edit extends Activity
     }
 
     @Override
+    //알람 버튼을 오랫동안 누를 시 알람 삭제
     public boolean onLongClick(View v) {
         if(v.getId()==R.id.alarmView||v.getId()==R.id.alarmButton) {
             //delete the alarm information
