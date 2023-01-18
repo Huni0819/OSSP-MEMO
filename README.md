@@ -6,3 +6,5 @@
 * 잠금 버튼을 추가하여 쉽게 지워지지 않게 설정
 
 오픈 소스 주소 : https://github.com/SFZhang26/memo
+
+이전 주제로 작업하던 깃허브 주소 : https://github.com/Huni0819/OSSP
