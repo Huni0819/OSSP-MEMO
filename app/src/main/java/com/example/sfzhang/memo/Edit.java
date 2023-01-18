@@ -36,6 +36,7 @@ public class Edit extends Activity
     RadioButton rdButton;
     String pic="";
     String audio="";
+    ImageButton cancelButton;
 
     int tag;
     String textDate;
@@ -77,8 +78,17 @@ public class Edit extends Activity
         time_text.setText(textTime);
         edt.setText(mainText);
 
-        if(alarm.length()>1) av.setText("Alert at "+alarm+"!");
-        else av.setVisibility(View.GONE);
+        cancelButton = findViewById(R.id.cancel_button);
+
+        if(alarm.length()>1) {
+            av.setText("Alert at " + alarm + "!");
+            cancelButton.setVisibility(View.VISIBLE);
+
+        }
+        else {
+            av.setVisibility(View.GONE);
+            cancelButton.setVisibility(View.INVISIBLE);
+        }
 
         tagRadio=(RadioGroup) findViewById(R.id.tagRadio);
         tagRadio.setOnCheckedChangeListener(this);
@@ -198,7 +208,6 @@ public class Edit extends Activity
         av.setVisibility(View.VISIBLE);
         Toast.makeText(this,"Alarm will be on at "+alarm+" !",Toast.LENGTH_LONG).show();
 
-        ImageButton cancelButton = findViewById(R.id.cancel_button);
         cancelButton.setVisibility(View.VISIBLE);
     }
 
@@ -255,7 +264,6 @@ public class Edit extends Activity
         if(view.getId()==R.id.cancel_button){
             alarm="";
             av.setVisibility(view.GONE);
-            ImageButton cancelButton = findViewById(R.id.cancel_button);
             cancelButton.setVisibility(view.INVISIBLE);
         }
     }

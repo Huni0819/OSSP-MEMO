@@ -48,8 +48,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/multiply"
-                android:onClick="setCancel"
-                android:visibility="gone" />
+                android:onClick="setCancel" />
 
             <ImageButton
                 android:layout_width="30dp"
